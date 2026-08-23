@@ -1,0 +1,145 @@
+// Stack Implementation using Linked List
+// #include<iostream>
+// using namespace std;
+ 
+// struct Node{
+//     int data;
+//     Node* next;
+// };
+ 
+// Node* top=NULL;
+ 
+// void push(int data){
+//     Node* newNode=new Node();
+//     newNode->data=data;
+//     newNode->next=top;
+//     top=newNode;
+// }
+ 
+// void pop(){
+//     if(top==NULL){
+//         cout<<"stack underflow\n";
+//     }
+//     else{
+//         Node* temp=top;
+//         cout<<" element popped: "<<temp->data<<"\n";
+//         top=top->next;
+//         delete temp;
+//     }
+// }
+ 
+// int main(){
+//     int n;
+//     cout<<"how many elements you want to push: ";
+//     cin>>n;
+ 
+//     for(int i=0;i<n;i++){
+//       int element;
+//       cout<<"what element you want to push: ";
+//       cin>>element;
+//       push(element);
+ 
+//       cout<<"stack: ";
+//       Node* temp=top;
+//       while(temp!=NULL){
+//           cout<<temp->data<<" ";
+//           temp=temp->next;
+//       }
+//       cout<<"\n";
+//     }
+ 
+//     cout<<"\n"<<"how many elements you want to pop: ";
+//     cin>>n;
+//     for(int i=0;i<n;i++){
+//       pop();
+ 
+//       cout<<"stack: ";
+//       Node* temp2=top;
+//       while(temp2!=NULL){
+//           cout<<temp2->data<<" ";
+//           temp2=temp2->next;
+//       }
+//       cout<<"\n";
+//     }
+ 
+//     return 0;
+// }
+
+//queue using linked list
+// #include<iostream>
+// using namespace std;
+ 
+// struct Node{
+//     int data;
+//     Node* next;
+// };
+ 
+// Node* front=NULL;
+// Node* rear=NULL;
+ 
+// void enqueue(int data){
+//     Node* newNode=new Node();
+//     newNode->data=data;
+//     newNode->next=NULL;
+ 
+//     if(front==NULL){
+//         front=newNode;
+//         rear=newNode;
+//     }
+//     else{
+//         rear->next=newNode;
+//         rear=newNode;
+//     }
+// }
+ 
+// void dequeue(){
+//     if(front==NULL){
+//         cout<<"queue underflow\n";
+//     }
+//     else{
+//         Node* temp=front;
+//         cout<<" element dequeued: "<<temp->data<<"\n";
+//         front=front->next;
+//         if(front==NULL){
+//             rear=NULL;
+//         }
+//         delete temp;
+//     }
+// }
+ 
+// int main(){
+//     int n;
+//     cout<<"how many elements you want to enqueue: ";
+//     cin>>n;
+ 
+//     for(int i=0;i<n;i++){
+//       int element;
+//       cout<<"what element you want to enqueue: ";
+//       cin>>element;
+//       enqueue(element);
+ 
+//       cout<<"queue: ";
+//       Node* temp=front;
+//       while(temp!=NULL){
+//           cout<<temp->data<<" ";
+//           temp=temp->next;
+//       }
+//       cout<<"\n";
+//     }
+ 
+//     cout<<"\n"<<"how many elements you want to dequeue: ";
+//     cin>>n;
+//     for(int i=0;i<n;i++){
+//       dequeue();
+ 
+//       cout<<"queue: ";
+//       Node* temp2=front;
+//       while(temp2!=NULL){
+//           cout<<temp2->data<<" ";
+//           temp2=temp2->next;
+//       }
+//       cout<<"\n";
+//     }
+ 
+//     return 0;
+// }
