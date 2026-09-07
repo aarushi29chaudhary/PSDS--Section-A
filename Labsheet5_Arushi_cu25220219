@@ -1,0 +1,235 @@
+//Question1:
+#include <iostream>
+using namespace std;
+
+char stack[100];
+int top = -1;
+
+void push(char c) {
+    top++;
+    stack[top] = c;
+}
+
+char pop() {
+    char c = stack[top];
+    top--;
+    return c;
+}
+
+int prec(char c) {
+    if (c == '+' || c == '-')
+        return 1;
+    if (c == '*' || c == '/')
+        return 2;
+    if (c == '^')
+        return 3;
+    return 0;
+}
+
+int main() {
+    string infix, postfix = "";
+    cout << "Enter infix expression: ";
+    cin >> infix;
+
+    for (int i = 0; i < infix.length(); i++) {
+        char c = infix[i];
+
+        if (isalnum(c)) {
+            postfix += c;
+        }
+        else if (c == '(') {
+            push(c);
+        }
+        else if (c == ')') {
+            while (top != -1 && stack[top] != '(') {
+                postfix += pop();
+            }
+            pop(); // remove '('
+        }
+        else {
+            while (top != -1 && prec(stack[top]) >= prec(c)) {
+                postfix += pop();
+            }
+            push(c);
+        }
+    }
+
+    while (top != -1) {
+        postfix += pop();
+    }
+
+    cout << "Postfix expression: " << postfix << endl;
+
+    return 0;
+}
+
+//Question2:
+// #include <iostream>
+// using namespace std;
+ 
+// int stack[100];
+// int top = -1;
+ 
+// void push(int x) {
+//     top++;
+//     stack[top] = x;
+// }
+ 
+// int pop() {
+//     int x = stack[top];
+//     top--;
+//     return x;
+// }
+ 
+// int main() {
+//     string exp;
+//     cout << "Enter postfix expression : ";
+//     cin >> exp;
+ 
+//     for (int i = 0; i < exp.length(); i++) {
+//         char c = exp[i];
+ 
+//         if (isdigit(c)) {
+//             push(c - '0');
+//         }
+//         else {
+//             int b = pop();
+//             int a = pop();
+//             int result;
+ 
+//             if (c == '+') result = a + b;
+//             else if (c == '-') result = a - b;
+//             else if (c == '*') result = a * b;
+//             else if (c == '/') result = a / b;
+ 
+//             push(result);
+//         }
+//     }
+ 
+//     cout << "Result: " << pop() << endl;
+ 
+//     return 0;
+// }
+
+//question3:
+// #include <iostream>
+// using namespace std;
+
+// struct Node {
+//     int data;
+//     Node *left, *right;
+// };
+
+// Node* newNode(int val) {
+//     Node* n = new Node();
+//     n->data = val;
+//     n->left = NULL;
+//     n->right = NULL;
+//     return n;
+// }
+
+// Node* insert(Node* root, int val) {
+//     if (root == NULL)
+//         return newNode(val);
+
+//     if (val < root->data)
+//         root->left = insert(root->left, val);
+//     else if (val > root->data)
+//         root->right = insert(root->right, val);
+
+//     return root;
+// }
+
+// Node* findMin(Node* root) {
+//     while (root->left != NULL)
+//         root = root->left;
+//     return root;
+// }
+
+// Node* deleteNode(Node* root, int val) {
+//     if (root == NULL)
+//         return root;
+
+//     if (val < root->data) {
+//         root->left = deleteNode(root->left, val);
+//     }
+//     else if (val > root->data) {
+//         root->right = deleteNode(root->right, val);
+//     }
+//     else {
+//         if (root->left == NULL) {
+//             Node* temp = root->right;
+//             delete root;
+//             return temp;
+//         }
+//         else if (root->right == NULL) {
+//             Node* temp = root->left;
+//             delete root;
+//             return temp;
+//         }
+
+//         Node* temp = findMin(root->right);
+//         root->data = temp->data;
+//         root->right = deleteNode(root->right, temp->data);
+//     }
+
+//     return root;
+// }
+
+// void inorder(Node* root) {
+//     if (root == NULL)
+//         return;
+//     inorder(root->left);
+//     cout << root->data << " ";
+//     inorder(root->right);
+// }
+
+// void preorder(Node* root) {
+//     if (root == NULL)
+//         return;
+//     cout << root->data << " ";
+//     preorder(root->left);
+//     preorder(root->right);
+// }
+
+// void postorder(Node* root) {
+//     if (root == NULL)
+//         return;
+//     postorder(root->left);
+//     postorder(root->right);
+//     cout << root->data << " ";
+// }
+
+// int main() {
+//     Node* root = NULL;
+
+//     int values[] = {50, 30, 70, 20, 40, 60, 80};
+//     int n = 7;
+
+//     for (int i = 0; i < n; i++) {
+//         root = insert(root, values[i]);
+//     }
+
+//     cout << "Inorder: ";
+//     inorder(root);
+//     cout << endl;
+
+//     cout << "Preorder: ";
+//     preorder(root);
+//     cout << endl;
+
+//     cout << "Postorder: ";
+//     postorder(root);
+//     cout << endl;
+
+//     root = deleteNode(root, 20);
+//     root = deleteNode(root, 30);
+//     root = deleteNode(root, 50);
+
+//     cout << "\nAfter deleting 20, 30, 50:" << endl;
+//     cout << "Inorder: ";
+//     inorder(root);
+//     cout << endl;
+
+//     return 0;
+// }
