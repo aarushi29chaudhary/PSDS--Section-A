@@ -1,0 +1,114 @@
+#include <iostream>
+#include <cstdlib>
+#include <string>
+using namespace std;
+
+const string MYSQL_PATH = "\"C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysql.exe\"";
+const string USER = "root";
+const string PASSWORD = "Aarushi@@29";  
+bool runQuery(const string &sql, const string &db = "") {
+    string dbFlag = db.empty() ? "" : "-D " + db + " ";
+    string command = MYSQL_PATH + " -u" + USER + " -p" + PASSWORD + " " +
+                      dbFlag + "-e \"" + sql + "\"";
+    string wrappedCommand = "\"" + command + "\"";
+    int result = system(wrappedCommand.c_str());
+    if (result != 0) {
+        cerr << "Query failed: " << sql << endl;
+        return false;
+    }
+    return true;
+}
+
+int main() {
+    bool allOk = true;
+
+    allOk &= runQuery("CREATE DATABASE IF NOT EXISTS CampusDB");
+
+    allOk &= runQuery(
+        "CREATE TABLE IF NOT EXISTS Faculty ("
+        "faculty_id INT PRIMARY KEY, "
+        "faculty_name VARCHAR(100) NOT NULL)",
+        "CampusDB"
+    );
+
+    allOk &= runQuery(
+        "CREATE TABLE IF NOT EXISTS Learner ("
+        "learner_id INT PRIMARY KEY, "
+        "learner_name VARCHAR(100) NOT NULL, "
+        "email VARCHAR(100) UNIQUE, "
+        "faculty_id INT, "
+        "FOREIGN KEY (faculty_id) REFERENCES Faculty(faculty_id))",
+        "CampusDB"
+    );
+
+    allOk &= runQuery(
+        "CREATE TABLE IF NOT EXISTS Subject ("
+        "subject_id INT PRIMARY KEY, "
+        "subject_name VARCHAR(100) NOT NULL, "
+        "credits INT, "
+        "faculty_id INT, "
+        "FOREIGN KEY (faculty_id) REFERENCES Faculty(faculty_id))",
+        "CampusDB"
+    );
+
+    allOk &= runQuery(
+        "CREATE TABLE IF NOT EXISTS Registration ("
+        "registration_id INT PRIMARY KEY, "
+        "learner_id INT, "
+        "subject_id INT, "
+        "registration_date DATE, "
+        "FOREIGN KEY (learner_id) REFERENCES Learner(learner_id), "
+        "FOREIGN KEY (subject_id) REFERENCES Subject(subject_id))",
+        "CampusDB"
+    );
+
+    allOk &= runQuery(
+        "INSERT IGNORE INTO Faculty (faculty_id, faculty_name) VALUES "
+        "(1, 'Dr. Ashish Verma'), "
+        "(2, 'Dr. Neha Sharma'), "
+        "(3, 'Dr. Rakesh Gupta'), "
+        "(4, 'Dr. Priya Nair'), "
+        "(5, 'Dr. Rekha ')",
+        "CampusDB"
+    );
+
+    allOk &= runQuery(
+        "INSERT IGNORE INTO Learner (learner_id, learner_name, email, faculty_id) VALUES "
+        "(101, 'Aarav Singh', 'aarav.singh@mail.com', 1), "
+        "(102, 'Diya Patel', 'diya.patel@mail.com', 2), "
+        "(103, 'Kabir Mehta', 'kabir.mehta@mail.com', 3), "
+        "(104, 'Ishita Rao', 'ishita.rao@mail.com', 4), "
+        "(105, 'Vivaan Joshi', 'vivaan.joshi@mail.com', 5)",
+        "CampusDB"
+    );
+
+    allOk &= runQuery(
+        "INSERT IGNORE INTO Subject (subject_id, subject_name, credits, faculty_id) VALUES "
+        "(201, 'Data Structures', 4, 1), "
+        "(202, 'Digital Electronics', 3, 2), "
+        "(203, 'Thermodynamics', 4, 3), "
+        "(204, 'Structural Analysis', 3, 4), "
+        "(205, 'Linear Algebra', 3, 5)",
+        "CampusDB"
+    );
+
+    allOk &= runQuery(
+        "INSERT IGNORE INTO Registration (registration_id, learner_id, subject_id, registration_date) VALUES "
+        "(301, 101, 201, '2026-01-10'), "
+        "(302, 102, 202, '2026-01-11'), "
+        "(303, 103, 203, '2026-01-12'), "
+        "(304, 104, 204, '2026-01-13'), "
+        "(305, 105, 205, '2026-01-14')",
+        "CampusDB"
+    );
+
+    if (allOk) {
+        cout << "Database CampusDB created successfully!" << endl;
+        cout << "All tables created successfully!" << endl;
+        cout << "Sample data inserted successfully!" << endl;
+    } else {
+        cout << "One or more steps FAILED. Check the errors above." << endl;
+    }
+
+    return 0;
+}
