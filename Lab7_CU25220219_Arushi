@@ -1,0 +1,121 @@
+// //question 1
+// #include <iostream>
+// using namespace std;
+// void maxHeapify(int arr[], int n, int i) {
+//     int largest = i;
+//     int left = 2 * i + 1;
+//     int right = 2 * i + 2;
+//     if(left < n && arr[left] > arr[largest])
+//         largest = left;
+//     if(right < n && arr[right] > arr[largest])
+//         largest = right;
+//     if(largest != i) {
+//         swap(arr[i], arr[largest]);
+//         maxHeapify(arr, n, largest);
+//     }
+// }
+// void buildMaxHeap(int arr[], int n) {
+//     for(int i = n / 2 - 1; i >= 0; i--)
+//         maxHeapify(arr, n, i);
+// }
+// void heapSort(int arr[], int n) {
+//     buildMaxHeap(arr, n);
+//     for(int i = n - 1; i > 0; i--) {
+//         swap(arr[0], arr[i]);
+//         maxHeapify(arr, i, 0);
+//     }
+// }
+// int main() {
+//     int arr[] = {4, 10, 3, 5, 1};
+//     int n = sizeof(arr) / sizeof(arr[0]);
+//     cout << "Original array: ";
+//     for(int i = 0; i < n; i++)
+//         cout << arr[i] << " ";
+//     cout << endl;
+//     buildMaxHeap(arr, n);
+//     cout << "Max Heap: ";
+//     for(int i = 0; i < n; i++)
+//         cout << arr[i] << " ";
+//     cout << endl;
+//     heapSort(arr, n);
+//     cout << "Heap Sorted array: ";
+//     for(int i = 0; i < n; i++)
+//         cout << arr[i] << " ";
+//     cout << endl;
+//     return 0;
+// }
+
+
+// //question2
+// #include <iostream>
+// #include <algorithm>
+// using namespace std;
+// int main() {
+//     int n;
+//     cout << "Enter size: ";
+//     cin >> n;
+//     long long arr[n];
+//     cout << "Enter elements: ";
+//     for(int i = 0; i < n; i++)
+//         cin >> arr[i];
+//     sort(arr, arr + n);
+//     long long result[n];
+//     int left = 0;
+//     int right = n - 1;
+//     int index = 0;
+//     while(left <= right) {
+//         if(index % 2 == 0) {
+//             result[index] = arr[left];
+//             left++;
+//         }
+//         else {
+//             result[index] = arr[right];
+//             right--;
+//         }
+//         index++;
+//     }
+//     long long sum = 0;
+//     for(int i = 0; i < n - 1; i++) {
+//         sum += abs(result[i] - result[i + 1]);
+//     }
+//     cout << "Rearranged array: ";
+//     for(int i = 0; i < n; i++)
+//         cout << result[i] << " ";
+//     cout << endl;
+//     cout << "Maximum sum of differences: "
+//          << sum << endl;
+//     return 0;
+// }
+
+//question3
+// #include <iostream>
+// #include <climits>
+// using namespace std;
+// int main() {
+//     int n;
+//     long long target;
+//     cout << "Enter size: ";
+//     cin >> n;
+//     long long arr[n];
+//     cout << "Enter elements: ";
+//     for(int i = 0; i < n; i++)
+//         cin >> arr[i];
+//     cout << "Enter target: ";
+//     cin >> target;
+//     int left = 0;
+//     long long sum = 0;
+//     int ans = INT_MAX;
+//     for(int right = 0; right < n; right++) {
+//         sum += arr[right];
+//         while(sum > target) {
+//             ans = min(ans, right - left + 1);
+//             sum -= arr[left];
+//             left++;
+//         }
+//     }
+//     if(ans == INT_MAX)
+//         cout << "Answer: -1" << endl;
+//     else
+//         cout << "Answer: " << ans << endl;
+//     return 0;
+// }
