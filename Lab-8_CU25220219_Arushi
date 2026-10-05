@@ -1,0 +1,97 @@
+//question1:
+// #include <iostream>
+// using namespace std;
+// int main()
+// {
+//     int N, K;
+//     cin >> N >> K;
+//     int A[100000];
+//     for (int i = 0; i < N; i++)
+//         cin >> A[i];
+//     int sum = 0;
+//     for (int i = 0; i < K; i++)
+//         sum += A[i];
+//     int maximum = sum;
+//     for (int i = K; i < N; i++)
+//     {
+//         sum = sum + A[i] - A[i - K];
+//         if (sum > maximum)
+//             maximum = sum;
+//     }
+//     cout << maximum;
+//     return 0;
+// }
+
+//question2:
+// #include <iostream>
+// #include <string>
+// using namespace std;
+// int main()
+// {
+//     string S;
+//     cin >> S;
+//     int last[26];
+//     for (int i = 0; i < 26; i++)
+//         last[i] = -1;
+//     int start = 0;
+//     int maximum = 0;
+//     for (int i = 0; i < S.length(); i++)
+//     {
+//         int index = S[i] - 'a';
+//         if (last[index] >= start)
+//             start = last[index] + 1;
+//         last[index] = i;
+//         int length = i - start + 1;
+//         if (length > maximum)
+//             maximum = length;
+//     }
+//     cout << maximum;
+//     return 0;
+// }
+
+// //question3:
+#include <iostream>
+using namespace std;
+int main()
+{
+    int N, M, K;
+    cin >> N >> M >> K;
+    int u[10000], v[10000], w[10000];
+    for (int i = 0; i < M; i++)
+    {
+        cin >> u[i] >> v[i] >> w[i];
+    }
+    const int INF = 1000000000;
+    int dp[1001];
+    int newdp[1001];
+    for (int i = 1; i <= N; i++)
+        dp[i] = INF;
+    dp[1] = 0;
+    for (int edges = 1; edges <= K; edges++)
+    {
+        for (int i = 1; i <= N; i++)
+            newdp[i] = dp[i];
+        for (int i = 0; i < M; i++)
+        {
+            if (dp[u[i]] != INF)
+            {
+                int value = dp[u[i]] + w[i];
+                if (value < newdp[v[i]])
+                    newdp[v[i]] = value;
+            }
+            if (dp[v[i]] != INF)
+            {
+                int value = dp[v[i]] + w[i];
+                if (value < newdp[u[i]])
+                    newdp[u[i]] = value;
+            }
+        }
+        for (int i = 1; i <= N; i++)
+            dp[i] = newdp[i];
+    }
+    if (dp[N] == INF)
+        cout << -1;
+    else
+        cout << dp[N];
+    return 0;
+}
