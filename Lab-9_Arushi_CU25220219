@@ -1,0 +1,33 @@
+#include <iostream>
+using namespace std;
+int main()
+{
+    int T;
+    cin >> T;
+    while (T--)
+    {
+        int N;
+        cin >> N;
+        int A[100];
+        for (int i = 0; i < N; i++)
+        {
+            cin >> A[i];
+        }
+        int operations = 0;
+        bool possible = true;
+        for (int i = 0; i < N; i++)
+        {
+            if (A[i] > 0)
+            {
+                possible = false;
+                break;
+            }
+            operations = operations + (-A[i]);
+        }
+        if (possible)
+            cout << operations << endl;
+        else
+            cout << -1 << endl;
+    }
+    return 0;
+}
